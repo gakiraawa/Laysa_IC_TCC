@@ -197,7 +197,96 @@ db_3_renamed <- db_3_renamed %>%
   )
 colnames(db_3_renamed)
 
-glimpse(db_1_renamed)
+  glimpse(db_1_renamed)
+
+
+
+unique(db_1_renamed$alim_disp)
+
+db_1_renamed <- db_1_renamed %>%
+  mutate(
+    alim_disp = case_when(
+      str_detect(alim_disp, "mamão") ~ "mamao",
+      str_detect(alim_disp, "nada \\(alim caiu no chao\\)") ~ NA,
+      str_detect(alim_disp, "nada") ~ NA,
+      str_detect(alim_disp, "banana, manga, mamão, abacate") ~ "abacate_banana_mamao_manga",
+      str_detect(alim_disp, "banana, manga, mamão, abacate") ~ "abacate_banana_mamao_manga",
+      str_detect(alim_disp, "manga, abacate") ~ "abacate_manga",
+      str_detect(alim_disp, "mamão, banana, manga") ~ "banana_mamao_manga",
+      str_detect(alim_disp, "mamão, manga, banana") ~ "banana_mamao_manga",
+      str_detect(alim_disp, "manga, banana") ~ "banana_manga",
+      str_detect(alim_disp, "mamão, melão, mexirica") ~ "mamao_melao_mexirica",
+      str_detect(alim_disp, "mamão, melão") ~ "mamao_melao",
+      str_detect(alim_disp, "mamão, melão") ~ "mamao_melao",
+      str_detect(alim_disp, "melão, mexirica") ~ "melao_mexirica",
+      str_detect(alim_disp, "melão") ~ "melao",
+      TRUE ~ alim_disp
+    )
+  )
+
+unique(db_1_renamed$alim_esco_capuchin)
+
+db_1_renamed <- db_1_renamed %>%
+  mutate(
+    alim_esco_capuchin = case_when(
+      str_detect(alim_esco_capuchin, "mamão") ~ "mamao",
+      str_detect(alim_esco_capuchin, "0.0") ~ NA,
+      str_detect(alim_esco_capuchin, "casca ni \\(pega do chao\\)") ~ "restos",
+      str_detect(alim_esco_capuchin, "casca ni") ~ "restos",
+      str_detect(alim_esco_capuchin, "nada") ~ NA,
+      str_detect(alim_esco_capuchin, "trigo \\(da plantação\\)") ~ "trigo",
+      str_detect(alim_esco_capuchin, "ni") ~ NA,
+      str_detect(alim_esco_capuchin, "abacate \\(prov do chao\\)") ~ "abacate",
+      str_detect(alim_esco_capuchin, "casca velha") ~ "restos",
+      str_detect(alim_esco_capuchin, "trigo plant") ~ "trigo",
+      str_detect(alim_esco_capuchin, "melao \\(casca\\)") ~ "melao",
+      TRUE ~ alim_esco_capuchin
+    )
+  )
+a
+
+unique(db_1_renamed$id_animal)
+
+db_1_renamed <- db_1_renamed %>%
+  mutate(
+    id_animal = case_when(
+      str_detect(id_animal, "macaco prego") ~ "macaco_prego",
+      str_detect(id_animal, "macaco-prego") ~ "macaco_prego",
+      str_detect(id_animal, "ouriço-cacheiro") ~ "ourico_cacheiro",
+      str_detect(id_animal, "sarue  \\(gambá de orelh bran\\)") ~ "sarue",
+      str_detect(id_animal, "sarue \\(gamba de orelh branc") ~ "sarue",
+      str_detect(id_animal, "ouriço cacheiro") ~ "ourico_cacheiro",
+      TRUE ~ id_animal
+    )
+  )
+
+db_1_renamed <- db_1_renamed %>%
+  mutate(
+    id_animal = case_when(
+      str_detect(id_animal, "macaco prego") ~ "macaco_prego",
+      str_detect(id_animal, "macaco-prego") ~ "macaco_prego",
+      str_detect(id_animal, "ouriço-cacheiro") ~ "ourico_cacheiro",
+      str_detect(id_animal, "sarue  \\(gambá de orelh bran\\)") ~ "sarue",
+      str_detect(id_animal, "sarue \\(gamba de orelh branc") ~ "sarue",
+      str_detect(id_animal, "ouriço cacheiro") ~ "ourico_cacheiro",
+      TRUE ~ id_animal
+    )
+  )
+
+unique(db_1_renamed$sex_age)
+db_1_renamed <- db_1_renamed %>%
+  mutate(
+    sex_age = case_when(
+      str_detect(sex_age, "JUV") ~ "JU",
+      str_detect(sex_age, "ni") ~ "NI",
+      TRUE ~ sex_age
+    )
+  )
+
+db_1_renamed <- db_1_renamed %>% 
+  mutate(sex_age = replace_na(sex_age, "NI"))
+
+unique(db_1_renamed$alim)
 
 # 1. Defina quais colunas vão virar fator (coloque os nomes exatos aqui)
 colunas_para_fator <- c("coluna_A", "coluna_B", "coluna_C")
